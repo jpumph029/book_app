@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Results</title>
+</head>
+<body>
+  <header><h2>Search</h2></header>
+  <main>
+    <ul>
+      <% newBook.foreach(item => { %>
+        <li>
+          <p><% item.title %></p>
+          <p><% item.author %></p>    
+          <p><% item.description %></p>    
+        </li>
+      <%})%>  
+    </ul>
+  </main>
+</body>
+</html>
