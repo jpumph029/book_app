@@ -2,7 +2,9 @@
 
 const express = require('express');
 const superagent = require('superagent');
+const pg = require('pg');
 const app = express();
+require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
@@ -13,18 +15,27 @@ app.get('/', (req, res) => {
   res.render('./pages/index');
 });
 
-app.get('/error', (req, res) => {
-  res.render('./pages/error');
-});
+const client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
+client.on('error', err => console.error(err));
 
 app.post('/search', getSearchResults);
 
+// function saveBook(book) {
+//   const SQL = `INSERT INTO books (author,title,isbn,image_url,description,bookshelf) VALUES ($1, $2, $3, $4, $5, $6);`;
+//   const values = Object.values(this);
+//   values.push(book);
+//   client.query(SQL, values);
+// }
+
 function Book(data) {
   // TODO: fix this so || works
-  this.thumbnail = data.volumeInfo.imageLinks.thumbnail || 'https://via.placeholder.com/128x200.png';
   this.author = data.volumeInfo.authors || 'N/A';
   this.title = data.volumeInfo.title || 'N/A';
+  this.isbn = data.isbn;
+  this.thumbnail = data.volumeInfo.imageLinks.thumbnail || 'https://via.placeholder.com/128x200.png';
   this.description = data.volumeInfo.description || 'N/A';
+  this.bookshelf = data.bookshelf;
 }
 
 function getSearchResults(req, res) {
@@ -46,5 +57,5 @@ app.listen(PORT, () => {
 
 function handleError(err, res) {
   console.error(err);
-  if (res) res.satus(500).send('Sorry, something broke');
+  if (err) res.satus(500).render('./pages/error');
 }
