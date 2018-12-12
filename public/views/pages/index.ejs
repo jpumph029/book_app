@@ -1,40 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/public/styles/base.css">   
 </head>
-<link rel="stylesheet" href="/public/styles/base.css">
-<body class="container">
-<link rel="stylesheet" href="/styles/base.css">
-<header>
-    <h1>Saved books!</h1>
-</header>
-
+<body>
 <main>  
-         <button type="button">Search</button>
+  <button type="button">Search</button>
+  <p>Number of books: <%= numBooks %></p>
         <section class="book-view container">
             <ul id="book-list">
-              <% books.forEach(book => { 
-                  console.log('book', book); %>
+              <% books.forEach(book => {  %>
                 <li class="book-item" data-id="<%= book.id %>">
                   <h1><%= book.title %></h1>
                   <p> <strong>Author</strong> : <%= book.author %></p>
-                  <p> <strong>Isbn</strong>: <%= books.isbn %></p>
-                   <img src =<%= book.image_url %>> 
-                  <p> <strong>description</strong>: <%= book.description %></p>
+                   <img src =<%= book.image_url %>>
                   <a href="/books/book/<%= book.id%>">View Details</a>
                 </li>
                 <% }) %>
               </ul>     
           </section>
    </main>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"></script>
-
-    <script src="server.js"></script>
-<footer>
-    
-</footer>
-
 </body>
 </html>
