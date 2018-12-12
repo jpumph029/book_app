@@ -1,22 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Search Google Books</title>
-    <link rel="stylesheet"  type="text/css" href="/styles/reset.css" />
-    <link rel="stylesheet"  type="text/css" href="/styles/base.css" />
+        
 </head>
-<body>
-    <form action="/search" method="POST">
-        <label>Enter book search: 
-          <input type="text" name="searchField">
-        </label>
-        <label>Search titles
-          <input type="radio" name="userInput" value="intitle">
-        </label>
-        <label>Search authors
-          <input type="radio" name="userInput" value="inauthor">
-        </label>
-        <button type="submit">Search</button>
-      </form>   
+<link rel="stylesheet" href="/public/styles/base.css">
+<body class="container">
+<link rel="stylesheet" href="/styles/base.css">
+<header>
+    <h1>Saved books!</h1>
+</header>
+
+<main>  
+         <button type="button">Search</button>
+        <section class="book-view container">
+            <ul id="book-list">
+              <% books.forEach(book => { 
+                  console.log('book', book); %>
+                <li class="book-item" data-id="<%= book.id %>">
+                  <h1><%= book.title %></h1>
+                  <p> <strong>Author</strong> : <%= book.author %></p>
+                  <p> <strong>Isbn</strong>: <%= books.isbn %></p>
+                   <img src =<%= book.image_url %>> 
+                  <p> <strong>description</strong>: <%= book.description %></p>
+                  <a href="/books/book/<%= book.id%>">View Details</a>
+                </li>
+                <% }) %>
+              </ul>     
+          </section>
+   </main>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+
+    <script src="server.js"></script>
+<footer>
+    
+</footer>
+
 </body>
 </html>

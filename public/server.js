@@ -11,9 +11,9 @@ app.use(express.static('./public'));
 
 app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
-  res.render('./pages/index');
-});
+app.get('/', getBook);
+
+
 
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
@@ -58,4 +58,14 @@ app.listen(PORT, () => {
 function handleError(err, res) {
   console.error(err);
   if (err) res.satus(500).render('./pages/error');
+}
+
+function getBook(req, res){
+  let sql = 'SELECT * FROM books ';
+  let values=(req.params.books_id);
+
+  return client.query(sql,values).then(result =>{
+    console.log(result);
+    res.render('pages/index', {books: result.rows});
+  }).catch((err) =>console.log(err.message));
 }
