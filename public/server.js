@@ -63,9 +63,10 @@ function handleError(err, res) {
 function getBook(req, res){
   let sql = 'SELECT * FROM books ';
   let values=(req.params.books_id);
-
+  var counter = 0;
   return client.query(sql,values).then(result =>{
-    console.log(result);
-    res.render('pages/index', {books: result.rows});
+    result.rows.forEach( row => counter++);
+    console.log(counter);
+    res.render('pages/index', {books: result.rows, numBooks: counter});
   }).catch((err) =>console.log(err.message));
 }
