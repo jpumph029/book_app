@@ -13,44 +13,28 @@ app.get('/', (req, res) => {
   res.render('./pages/index');
 });
 
-app.post('/search', getUserInput);
+app.post('/search', getSearchResults);
 
 function Book(data) {
-  // this.thumbnail = data.imageLinks.thumbnail;  
-  this.author = data.volumeInfo.authors;
-  this.title = data.volumeInfo.title;
-  this.description = data.volumeInfo.description;
+  // TODO: fix this so || works
+  this.thumbnail = data.volumeInfo.imageLinks.thumbnail || 'https://via.placeholder.com/128x200.png';
+  this.author = data.volumeInfo.authors || 'N/A';
+  this.title = data.volumeInfo.title || 'N/A';
+  this.description = data.volumeInfo.description || 'N/A';
 }
 
-function getUserInput(req, res) {
-  console.log('my request body:', req.body);
+function getSearchResults(req, res) {
   let input = req.body;
-  retrieveAPIData(input)
-    .then(result => res.send(result))
-    .catch(error => handleError(error));
-}
-const retrieveAPIData = (input => {
-  let query = input.searchField;
-  let searchType = input.userInput;
-  let title_URL = `https://www.googleapis.com/books/v1/volumes?q=${query}:intitle=${query}`;
-  let author_URL = `https://www.googleapis.com/books/v1/volumes?q=${query}:inauthor=${query}`;
-  let _URL = '';
-  if (searchType === 'author') {
-    _URL = author_URL;
-  } else if (searchType === 'title') {
-    _URL = title_URL;
-  } else if (title_URL) {
-    _URL = title_URL;
-  }
-  return superagent.get(_URL).then(result => {
-    const bookResults = result.body.items.map(data => {
+  const URL = `https://www.googleapis.com/books/v1/volumes?q=${input.searchField}+${input.userInput}:${input.searchField}`;
+  return superagent.get(URL).then(data => {
+    const allBooks = data.body.items.map(data => {
       const newBook = new Book(data);
       return newBook;
     });
-    // console.log('allBooks', bookResults);
-    return bookResults;
-  });
-});
+    return allBooks;
+  }).then(allBooks => res.render('./pages/searches/show', { books: allBooks }))
+    .catch(error => handleError(error));
+}
 
 app.listen(PORT, () => {
   console.log(`listening on port: ${PORT}`);
