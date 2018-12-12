@@ -13,6 +13,10 @@ app.get('/', (req, res) => {
   res.render('./pages/index');
 });
 
+app.get('/error', (req, res) => {
+  res.render('./pages/error');
+});
+
 app.post('/search', getSearchResults);
 
 function Book(data) {
