@@ -20,6 +20,8 @@ client.connect();
 client.on('error', err => console.error(err));
 
 app.post('/search', getSearchResults);
+app.get('/',getBook);
+
 
 // function saveBook(book) {
 //   const SQL = `INSERT INTO books (author,title,isbn,image_url,description,bookshelf) VALUES ($1, $2, $3, $4, $5, $6);`;
