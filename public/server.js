@@ -13,6 +13,7 @@ app.set('view engine', 'ejs');
 
 app.get('/', getBook);
 app.get('/new-search', renderSearchForm);
+app.get('/book-details/:book_id', getDetialView);
 app.post('/search-results', getSearchResults);
 
 const client = new pg.Client(process.env.DATABASE_URL);
@@ -52,17 +53,27 @@ function getSearchResults(req, res) {
     .catch(error => handleError(error));
 }
 
-function getBook(req, res){
+function getBook(req, res) {
   let sql = 'SELECT * FROM books ';
-  let values=(req.params.books_id);
+  let values = (req.params.books_id);
   var counter = 0;
-  return client.query(sql,values).then(result =>{
-    result.rows.forEach( () => counter++);
-    res.render('pages/index', {books: result.rows, numBooks: counter});
-  }).catch((err) =>console.log(err.message));
+  return client.query(sql, values).then(result => {
+    result.rows.forEach(() => counter++);
+    res.render('pages/index', { books: result.rows, numBooks: counter });
+  }).catch((err) => console.log(err.message));
 }
 
-function renderSearchForm(req, res){
+function getDetialView(req, res) {
+  let SQL = 'SELECT * FROM books WHERE id=$1';
+  let values = [req.params.book_id];
+
+  return client.query(SQL, values).then(result => {
+    console.log('getDetails values = ', result.rows);
+    return res.render('./pages/books/detail', { bookDetails: result.rows });
+  });
+}
+
+function renderSearchForm(req, res) {
   res.render('./pages/searches/new');
 }
 

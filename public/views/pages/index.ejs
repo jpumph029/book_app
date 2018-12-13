@@ -8,14 +8,15 @@
   <main>  
     <p><a href="/new-search">Search</a></p>
     <p>Number of books: <%= numBooks %></p>
+    <h1>Saved Books</h1>
    <section class="book-view container">
      <ul id="book-list">
        <% books.forEach(book => {  %>
          <li class="book-item" data-id="<%= book.id %>">
-           <h1><%= book.title %></h1>
-           <p> <strong>Author</strong> : <%= book.author %></p>
            <img src =<%= book.image_url %>>
-           <a href="/books/book/<%= book.id%>">View Details</a>
+           <p><%= book.title %></p>
+           <p><%= book.author %></p>
+           <a href="/book-details/ <%= book.id%>">View Details</a>
          </li>
        <% }) %>
      </ul>     
