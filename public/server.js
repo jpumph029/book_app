@@ -20,6 +20,9 @@ client.connect();
 client.on('error', err => console.error(err));
 
 
+
+
+
 // function saveBook(book) {
 //   const SQL = `INSERT INTO books (author,title,isbn,image_url,description,bookshelf) VALUES ($1, $2, $3, $4, $5, $6);`;
 //   const values = Object.values(this);
