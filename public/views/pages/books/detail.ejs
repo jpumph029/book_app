@@ -1,15 +1,15 @@
 <section class="book-view container">
-        <ul id="book-list">
-          <% books.forEach(book => { 
-              %>
-            <li class="book-item" data-id="<%= book.id %>">
-              <h1><%= book.title %></h1>
-              <p> <strong>Author</strong> : <%= book.author %></p>
-              <p> <strong>Isbn</strong>: <%= books.isbn %></p>
-               <img src =<%= book.image_url %>> 
-              <p> <strong>description</strong>: <%= book.description %></p>
-              <a href="/books/book/<%= book.id%>">View Details</a>
-            </li>
-            <% }) %>
-          </ul>     
-      </section>
+  <ul id="book-list">
+    <% bookDetails.forEach(book => { %>
+         <li class="book-item" data-id="<%= book.id %>">
+           <img src =<%= book.image_url %>>
+           <p><%= book.title %></p>
+           <p> Author: <%= book.author %></p>
+           <p> ISBN: <%= book.isbn %></p>
+           <p> Description: <%= book.description %></p>
+           <p> Bookshelf: <%= book.bookshelf%></p>
+           <a href="/">Return</a>
+         </li>
+    <% }) %>
+  </ul>     
+</section>
