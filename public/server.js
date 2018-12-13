@@ -20,10 +20,6 @@ const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
 client.on('error', err => console.error(err));
 
-
-
-
-
 // function saveBook(book) {
 //   const SQL = `INSERT INTO books (author,title,isbn,image_url,description,bookshelf) VALUES ($1, $2, $3, $4, $5, $6);`;
 //   const values = Object.values(this);
@@ -66,7 +62,6 @@ function getBook(req, res) {
 function getDetialView(req, res) {
   let SQL = 'SELECT * FROM books WHERE id=$1';
   let values = [req.params.book_id];
-
   return client.query(SQL, values).then(result => {
     console.log('getDetails values = ', result.rows);
     return res.render('./pages/books/detail', { bookDetails: result.rows });
