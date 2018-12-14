@@ -1,26 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <link rel="stylesheet" href="/styles/base.css">
-  <link rel="stylesheet" href="/public/styles/base.css">   
+    <title>Best Books!</title>
+    <link rel="stylesheet"  type="text/css" href="/styles/reset.css" />
+    <link rel="stylesheet"  type="text/css" href="/styles/base.css" />
 </head>
 <body>
-  <main>  
-    <p><a href="/new-search">Search</a></p>
-    <p>Number of books: <%= numBooks %></p>
-    <h1>Saved Books</h1>
-   <section class="book-view container">
-     <ul id="book-list">
-       <% books.forEach(book => {  %>
-         <li class="book-item" data-id="<%= book.id %>">
-           <img src =<%= book.image_url %>>
-           <p><%= book.title %></p>
-           <p><%= book.author %></p>
-           <a href="/book-details/ <%= book.id%>">View Details</a>
-         </li>
-       <% }) %>
-     </ul>     
-   </section>
-  </main>
+    <form action="/search" method="POST">
+        <label>Search by Title or Author 
+          <input type="text" name="searchField">
+        </label>
+        <label> Title
+          <input type="radio" name="userInput" value="intitle">
+        </label>
+        <label>Author
+          <input type="radio" name="userInput" value="inauthor">
+        </label>
+        <button type="submit">Search the Google Books</button>
+      </form>   
 </body>
 </html>
